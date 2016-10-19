@@ -41,7 +41,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         started = true
         statusItem.title = titleStarted
         timer = Timer.scheduledTimer(
-            timeInterval: 5,
+            timeInterval: 2,
             target:self,
             selector: #selector(AppDelegate.tick),
             userInfo: nil,
@@ -59,25 +59,36 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func tick() {
         let cursor = NSEvent.mouseLocation()
+        let screen = NSScreen.main()!.frame
+        let offsets = [
+            [0, -1],
+            [1, -1],
+            [1, 0],
+            [1, 1],
+            [0, 1],
+            [-1, 1],
+            [-1, 0],
+            [-1, -1],
+            [0, -1],
+            [0, 0]
+        ]
         
-        for dx in -1...0 {
-            for dy in -1...0 {
-                
-                let mouseMoveEvent = CGEvent(
-                    mouseEventSource: nil,
-                    mouseType: .mouseMoved,
-                    mouseCursorPosition: CGPoint(
-                        x: Double(Float(cursor.x) + Float(dx)),
-                        y: Double(Float(cursor.y) + Float(dy))
-                    ),
-                    mouseButton: CGMouseButton.left
-                )
-                mouseMoveEvent?.post(tap: .cghidEventTap)
-                usleep(200_000)
-            }
+        for offset in offsets {
+            let dx = offset[0]
+            let dy = offset[1]
+
+            let mouseMoveEvent = CGEvent(
+                mouseEventSource: nil,
+                mouseType: .mouseMoved,
+                mouseCursorPosition: CGPoint(
+                    x: Double(cursor.x) + Double(dx),
+                    y: Double(screen.height) - Double(cursor.y) + Double(dy)
+                ),
+                mouseButton: CGMouseButton.left
+            )
+            mouseMoveEvent?.post(tap: .cghidEventTap)
+            usleep(10_000)
         }
-        
-        
         
     }
 
