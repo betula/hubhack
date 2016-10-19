@@ -62,13 +62,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let screen = NSScreen.main()!.frame
         let offsets = [
             [0, -1],
-            [1, -1],
             [1, 0],
-            [1, 1],
             [0, 1],
-            [-1, 1],
             [-1, 0],
-            [-1, -1],
             [0, -1],
             [0, 0]
         ]
