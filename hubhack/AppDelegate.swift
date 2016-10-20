@@ -19,8 +19,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var timer: Timer?
     
     var started = false
-    let title = "H."
-    let titleStarted = "H->"
+    let title = "H"
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         statusItem.title = title
@@ -35,20 +34,31 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @IBAction func startClicked(_ sender: NSMenuItem) {
+        start(timeInterval: 2, label: title + "~50%");
+    }
+    @IBAction func startZeroClicked(_ sender: NSMenuItem) {
+        start(timeInterval: 5*60, label: title + "~0%");
+    }
+    @IBAction func stopClicked(_ sender: NSMenuItem) {
+        stop()
+    }
+    
+    func start(timeInterval: TimeInterval, label: String) {
         if (started) {
-            return
+            stop()
         }
         started = true
-        statusItem.title = titleStarted
+        statusItem.title = label
         timer = Timer.scheduledTimer(
-            timeInterval: 2,
+            timeInterval: timeInterval,
             target:self,
             selector: #selector(AppDelegate.tick),
             userInfo: nil,
             repeats: true
         )
     }
-    @IBAction func stopClicked(_ sender: NSMenuItem) {
+    
+    func stop() {
         if (!started) {
             return
         }
