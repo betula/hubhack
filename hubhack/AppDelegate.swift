@@ -37,7 +37,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         start(timeInterval: 2, label: title + "~50%");
     }
     @IBAction func startMiddleClicked(_ sender: NSMenuItem) {
-        start(timeInterval: 4, label: title + "~30%");
+        start(timeInterval: 5, label: title + "~20%");
     }
     @IBAction func startZeroClicked(_ sender: NSMenuItem) {
         start(timeInterval: 5*60, label: title + "~0%");

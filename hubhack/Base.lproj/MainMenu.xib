@@ -26,7 +26,7 @@
                         <action selector="startClicked:" target="Voe-Tx-rLC" id="1l8-Ng-Vew"/>
                     </connections>
                 </menuItem>
-                <menuItem title="On 30%" id="7Cv-vU-KMQ">
+                <menuItem title="On 20%" id="7Cv-vU-KMQ">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="startMiddleClicked:" target="Voe-Tx-rLC" id="8TY-r0-8zB"/>
