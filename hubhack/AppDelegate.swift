@@ -17,6 +17,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let statusItem = NSStatusBar.system().statusItem(withLength:NSVariableStatusItemLength)
 
     var timer: Timer?
+    var activity: Int = 0
     
     var started = false
     let title = "H"
@@ -34,35 +35,31 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @IBAction func startClicked(_ sender: NSMenuItem) {
-        start(timeInterval: 2, label: title + "~50%");
+        start(activity: 50);
     }
     @IBAction func startMiddleClicked(_ sender: NSMenuItem) {
-        start(timeInterval: 5, label: title + "~20%");
+        start(activity: 20);
     }
     @IBAction func startZeroClicked(_ sender: NSMenuItem) {
-        start(timeInterval: 5*60, label: title + "~0%");
+        start(activity: 0);
     }
     @IBAction func stopClicked(_ sender: NSMenuItem) {
         stop()
     }
     
-    func start(timeInterval: TimeInterval, label: String) {
-        if (started) {
+    func start(activity: Int) {
+        if started {
             stop()
         }
+        
         started = true
-        statusItem.title = label
-        timer = Timer.scheduledTimer(
-            timeInterval: timeInterval,
-            target:self,
-            selector: #selector(AppDelegate.tick),
-            userInfo: nil,
-            repeats: true
-        )
+        statusItem.title = title + "~" + String(activity) + "%"
+        self.activity = activity
+        tick();
     }
     
     func stop() {
-        if (!started) {
+        if !started {
             return
         }
         started = false
@@ -71,6 +68,30 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func tick() {
+        tremble()
+        
+        var timeInterval: Double
+        
+        switch activity {
+        case 20:
+            timeInterval = 3.5 + drand48()*4
+        case 50:
+            timeInterval = 1.7 + drand48()*0.6
+        default:
+            timeInterval = 5*60
+        }
+        
+        timer?.invalidate();
+        timer = Timer.scheduledTimer(
+            timeInterval: timeInterval,
+            target:self,
+            selector: #selector(AppDelegate.tick),
+            userInfo: nil,
+            repeats: false
+        )
+    }
+    
+    func tremble() {
         let cursor = NSEvent.mouseLocation()
         let screen = NSScreen.main()!.frame
         let offsets = [
@@ -85,7 +106,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         for offset in offsets {
             let dx = offset[0]
             let dy = offset[1]
-
+            
             let mouseMoveEvent = CGEvent(
                 mouseEventSource: nil,
                 mouseType: .mouseMoved,
@@ -98,7 +119,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             mouseMoveEvent?.post(tap: .cghidEventTap)
             usleep(10_000)
         }
-        
     }
 
 }
