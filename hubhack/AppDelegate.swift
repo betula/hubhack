@@ -17,10 +17,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let statusItem = NSStatusBar.system().statusItem(withLength:NSVariableStatusItemLength)
 
     var timer: Timer?
-    var activity: Int = 0
     
     var started = false
+    
     let title = "H"
+    let titleActive = "H-->"
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         statusItem.title = title
@@ -35,26 +36,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @IBAction func startClicked(_ sender: NSMenuItem) {
-        start(activity: 50);
-    }
-    @IBAction func startMiddleClicked(_ sender: NSMenuItem) {
-        start(activity: 20);
-    }
-    @IBAction func startZeroClicked(_ sender: NSMenuItem) {
-        start(activity: 0);
+        start();
     }
     @IBAction func stopClicked(_ sender: NSMenuItem) {
         stop()
     }
     
-    func start(activity: Int) {
+    func start() {
         if started {
             stop()
         }
-        
         started = true
-        statusItem.title = title + "~" + String(activity) + "%"
-        self.activity = activity
+        statusItem.title = titleActive
         tick();
     }
     
@@ -70,17 +63,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func tick() {
         tremble()
         
-        var timeInterval: Double
-        
-        switch activity {
-        case 20:
-            timeInterval = 3.5 + drand48()*4
-        case 50:
-            timeInterval = 1.7 + drand48()*0.6
-        default:
-            timeInterval = 5*60
-        }
-        
+        let timeInterval = 2 + 3 * drand48()
+
         timer?.invalidate();
         timer = Timer.scheduledTimer(
             timeInterval: timeInterval,

@@ -20,22 +20,10 @@
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <menu id="dy3-Qd-gpW">
             <items>
-                <menuItem title="On 50%" id="LFF-zj-5xu">
+                <menuItem title="On" id="LFF-zj-5xu">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="startClicked:" target="Voe-Tx-rLC" id="1l8-Ng-Vew"/>
-                    </connections>
-                </menuItem>
-                <menuItem title="On 20%" id="7Cv-vU-KMQ">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="startMiddleClicked:" target="Voe-Tx-rLC" id="8TY-r0-8zB"/>
-                    </connections>
-                </menuItem>
-                <menuItem title="On 0%" id="Fnz-6v-Gcn">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="startZeroClicked:" target="Voe-Tx-rLC" id="ev9-Vt-Kme"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Off" id="xvg-4N-bGM">
