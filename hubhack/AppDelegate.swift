@@ -16,7 +16,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     let statusItem = NSStatusBar.system().statusItem(withLength:NSVariableStatusItemLength)
 
-    var timer: Timer?
+    var timerForActivity: Timer?
+    var timerForActivityTremble: Timer?
+    
+    var activityTimeInterval: Double = 5*60
     
     var started = false
     
@@ -48,7 +51,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         started = true
         statusItem.title = titleActive
-        tick();
+        
+        startActivityTremble()
+        startActivity();
     }
     
     func stop() {
@@ -57,25 +62,57 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         started = false
         statusItem.title = title
-        timer?.invalidate()
+        
+        stopActivity()
+        stopActivityTremble()
     }
     
-    func tick() {
-        tremble()
+    func stopActivity() {
+        timerForActivity?.invalidate()
+    }
+    
+    func stopActivityTremble() {
+        timerForActivityTremble?.invalidate()
+    }
+    
+    func startActivityTremble() {
         
-        let timeInterval = 2 + 3 * drand48()
+        let activityTrembleTimeInterval: Double = 10*60
+        
+        func resetActivityTimeInterval() {
+            self.activityTimeInterval = 2 + 3 * drand48()
+        }
+        
+        timerForActivityTremble?.invalidate();
+        timerForActivityTremble = Timer.scheduledTimer(
+            withTimeInterval: activityTrembleTimeInterval,
+            repeats: true
+        ) {
+            _ in
+            resetActivityTimeInterval()
+        }
+        
+        resetActivityTimeInterval()
+    }
+    
+    func startActivity() {
+        tickActivity()
+    }
+    
+    func tickActivity() {
+        mouseTremble()
 
-        timer?.invalidate();
-        timer = Timer.scheduledTimer(
-            timeInterval: timeInterval,
+        timerForActivity?.invalidate();
+        timerForActivity = Timer.scheduledTimer(
+            timeInterval: activityTimeInterval,
             target:self,
-            selector: #selector(AppDelegate.tick),
+            selector: #selector(AppDelegate.tickActivity),
             userInfo: nil,
             repeats: false
         )
     }
     
-    func tremble() {
+    func mouseTremble() {
         let cursor = NSEvent.mouseLocation()
         let screen = NSScreen.main()!.frame
         let offsets = [
