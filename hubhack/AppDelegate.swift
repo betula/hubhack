@@ -90,7 +90,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             let plusFactor = 0.8
             let timeInterval = 2 + 3 * drand48()
 
-            activityTimeInterval = activityPlus ? timeInterval : timeInterval * plusFactor
+            activityTimeInterval = activityPlus ? timeInterval * plusFactor : timeInterval
         }
         
         timerForActivityTremble?.invalidate();
