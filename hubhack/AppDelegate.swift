@@ -22,9 +22,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var activityTimeInterval: Double = 5*60
     
     var started = false
+    var activityPlus = false
     
     let title = "H"
     let titleActive = "H-->"
+    let titleActivePlus = "H-->++>"
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         statusItem.title = title
@@ -39,6 +41,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @IBAction func startClicked(_ sender: NSMenuItem) {
+        activityPlus = false
+        start();
+    }
+    @IBAction func startPlusClicked(_ sender: NSMenuItem) {
+        activityPlus = true
         start();
     }
     @IBAction func stopClicked(_ sender: NSMenuItem) {
@@ -50,7 +57,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             stop()
         }
         started = true
-        statusItem.title = titleActive
+        statusItem.title = activityPlus ? titleActivePlus : titleActive
         
         startActivityTremble()
         startActivity();
@@ -80,7 +87,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let activityTrembleTimeInterval: Double = 10*60
         
         func resetActivityTimeInterval() {
-            self.activityTimeInterval = 2 + 3 * drand48()
+            let plusFactor = 0.8
+            let timeInterval = 2 + 3 * drand48()
+
+            activityTimeInterval = activityPlus ? timeInterval : timeInterval * plusFactor
         }
         
         timerForActivityTremble?.invalidate();
