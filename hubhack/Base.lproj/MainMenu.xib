@@ -26,10 +26,10 @@
                         <action selector="startClicked:" target="Voe-Tx-rLC" id="1l8-Ng-Vew"/>
                     </connections>
                 </menuItem>
-                <menuItem title="On +" id="m5r-64-frB">
+                <menuItem title="On -" id="m5r-64-frB">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="startPlusClicked:" target="Voe-Tx-rLC" id="TB6-te-1Xt"/>
+                        <action selector="startMinusClicked:" target="Voe-Tx-rLC" id="vml-OD-uip"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Off" id="xvg-4N-bGM">
