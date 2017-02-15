@@ -87,7 +87,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let activityTrembleTimeInterval: Double = 10*60
         
         func resetActivityTimeInterval() {
-            let minusFactor = 2.0
+            let minusFactor = 3.0
             let timeInterval = 2 + 3 * drand48()
 
             activityTimeInterval = activityMinus ? timeInterval * minusFactor : timeInterval
